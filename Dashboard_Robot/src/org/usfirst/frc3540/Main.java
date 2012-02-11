@@ -1,66 +1,53 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) FIRST 2008. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc3540;
 
 import java.util.Hashtable;
 import edu.wpi.first.wpilibj.*;
 import org.usfirst.frc3540.DataTypes;
 
+
+/*
+ * Dashboard data server skeleton
+ * 
+ * You can add your code to this skeleton like you normaly would. To start the server
+ * create a new dataserver can call start()
+ * 
+ * 
+ */
 public class Main extends IterativeRobot
 {
 
-	Encoder PWR = new Encoder(1, 2);
-	public  Joystick ps3 = new Joystick(1);
-	public  Victor m1 = new Victor(1);
-	public  Victor m2 = new Victor(2);
-	public  ADXL345_I2C acll = new ADXL345_I2C(1,
-			ADXL345_I2C.DataFormat_Range.k8G);
-	public  Gyro gg = new Gyro(1,1);
-	private double speed, rotation;
-	int PWRLast, PWRDiff;
-	public double a[] = new double[2000];
-	public int son = 0;
-	static Hashtable data = new Hashtable();
-	//AnalogChannel sonic = new AnalogChannel(1);
-	RobotDrive drive = new RobotDrive(m1, m2);
+	
 
 	public void robotInit()
 	{
-		PWR.start();
+		//Starts the data server
 		new DataServer(this).start();
-		// new DataServer().start();
 	}
 
-	public void autonomousPeriodic()
-	{
-		disp(2, "hi");
+	public void autonomousPeriodic(){
+		
 	}
 
-	public void teleopInt()
-	{
-		disp(1, "Calibrating...");
-		PWR.reset();
-		disp(2, "Done... Ready");
+	public void teleopInt(){
+		
 	}
 
-	boolean running = false;
 
 	public void teleopContinuous()
 	{
-		if(ps3.getRawButton(3)){
+		
 
-			gg.reset();
-		}
-		drive.arcadeDrive(-ps3.getRawAxis(3), ps3.getRawAxis(1) / 1.4);
-		disp(4, gg.getAngle() + "");
-		disp(5, gg.pidGet()+"");
 	}
 
+	
+	/**
+	 * Outputs a line of text to the Driverstation display
+	 * 
+	 * 
+	 * @param line the line (1-6) you want to display it on
+	 * @param msg  the message you want to output
+	 */
+	
 	public static void disp(int line, String msg)
 	{
 		DriverStationLCD.Line l;
@@ -93,44 +80,40 @@ public class Main extends IterativeRobot
 		DriverStationLCD.getInstance().updateLCD();
 	}
 
-	static Mode m = new Mode();
 
+	/**
+	 * This method is called by the DataServer everytime that data is requested. This is 
+	 * where you set all the key,data combos to send to the dashboard
+	 * 
+	 * All the data is inserted into a Hashtable and then returned to the DataServer.
+	 * 
+	 * Insert a key defined by DataTypes along with a Double object.
+	 * 
+	 * Example:
+	 * data.put(DataTypes.DATA_JOYSTICK_1_AXIS1, new Double(joystick.getRawAxis(1));
+	 * 
+	 * 
+	 * @return 
+	 */
 	public synchronized Hashtable update()
 	{
-		data.put(DataTypes.DATA_JOYSTICK_1_AXIS1, new Double(ps3.getRawAxis(1)));
-		data.put(DataTypes.DATA_ROBOT_MODE, getMode());
-		data.put(DataTypes.DATA_JOYSTICK_1_AXIS2, new Double(ps3.getRawAxis(2)));
-		data.put(DataTypes.DATA_JOYSTICK_1_AXIS3, new Double(ps3.getRawAxis(3)));
-		data.put(DataTypes.DATA_JOYSTICK_1_AXIS4, new Double(ps3.getRawAxis(4)));
-		data.put(DataTypes.DATA_JOYSTICK_1_AXIS5,
-				new Double(((ps3.getRawAxis(5) + 1) * 50)));
-		data.put(DataTypes.DATA_JOYSTICK_1_AXIS6, new Double(ps3.getRawAxis(6)));
-		data.put(DataTypes.DATA_DIGITAL_1,
-				new Double(acll.getAcceleration(ADXL345_I2C.Axes.kY)));
-		data.put(DataTypes.DATA_DIGITAL_2,
-				new Double(acll.getAcceleration(ADXL345_I2C.Axes.kX)));
-		data.put(DataTypes.DATA_DIGITAL_3,
-				new Double(acll.getAcceleration(ADXL345_I2C.Axes.kZ)));
-		data.put(DataTypes.DATA_ROBOT_VOLTS, new Double(DriverStation
-				.getInstance().getBatteryVoltage()));
-		 data.put(DataTypes.DATA_DIGITAL_13, new Double(gg.getAngle()));
-
+		Hashtable data = new Hashtable();
+		
+		
+		
+		
+		//data.put(DataTypes.DATA_JOYSTICK_1_AXIS1, new Double(joystick.getRawAxis(1));
+		
 		
 		return data;
 	}
 
-	public String arrayToString(double b[])
-	{
-		String c = "";
-
-		for (int i = 0; i < a.length; i++)
-		{
-			c = c + " " + b[i] + " ";
-		}
-
-		return c;
-	}
-
+	
+	
+	/**
+	 * 
+	 * @return Double, the current game mode
+	 */
 	public Double getMode()
 	{
 		if (isDisabled())
