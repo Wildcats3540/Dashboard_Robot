@@ -1,8 +1,9 @@
-package org.usfirst.frc3540;
+package com.wildcatrobotics.Dashboard_Robot;
 
 import java.util.Hashtable;
 import edu.wpi.first.wpilibj.*;
-import org.usfirst.frc3540.DataTypes;
+
+import com.wildcatrobotics.Dashboard_Robot.DataTypes;
 
 
 /*

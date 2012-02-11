@@ -1,6 +1,7 @@
 MIDlet-Name: AnInterativeJavaBot
 MIDlet-Version: 1.0.0
 MIDlet-Vendor: FIRST
-MIDlet-1: AnInterativeJavaBot, , org.usfirst.frc3540.Main
+MIDlet-1: AnInterativeJavaBot, , com.wildcatrobotics.Dashboard_Robot.Main
 MicroEdition-Profile: IMP-1.0
 MicroEdition-Configuration: CLDC-1.1
+
