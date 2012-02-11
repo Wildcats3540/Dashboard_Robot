@@ -2,6 +2,15 @@ package com.wildcatrobotics.Dashboard_Robot;
 
 import java.util.Hashtable;
 
+
+
+/*
+ * This class contains a list of predefined data type keys that you can use. 
+ * 
+ * if you need additional keys you can use a Integer that is not reservered 
+ * 
+ * 
+ */
 public class DataTypes {
 
 
